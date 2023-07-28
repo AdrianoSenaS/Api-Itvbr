@@ -1,0 +1,8 @@
+version: '3.4'
+
+services:
+  api-itvbr:
+    environment:
+      - ASPNETCORE_ENVIRONMENT=Development
+    ports:
+      - "80"

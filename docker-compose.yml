@@ -1,0 +1,8 @@
+version: '3.4'
+
+services:
+  api-itvbr:
+    image: ${DOCKER_REGISTRY-}apiitvbr
+    build:
+      context: .
+      dockerfile: Api-Itvbr/Dockerfile
