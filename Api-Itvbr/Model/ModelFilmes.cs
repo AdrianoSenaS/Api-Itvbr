@@ -14,15 +14,14 @@ namespace Api_Itvbr.Model
         public string? Categoria { get; set; }
         public string? Descricao { get; set; }
         public string? UrlVideo { get; set; }
-
-
+        private static List<ModelFilmes> filmes = new List<ModelFilmes>();
+        private static List<DataRow> ?rows;
+        private static string Table = "filmes";
+        private static string  Columns = "image, nome, genero, categoria, descricao, url";
 
         public static List<ModelFilmes> GetModelFilmes()
         {
-            string query = "filmes";
-            List<ModelFilmes> filmes = new List<ModelFilmes>();
-            List<DataRow> rows = Db.GetData(query).AsEnumerable().ToList();
-
+            rows = Db.GetData(Table).AsEnumerable().ToList();
             rows.ForEach(r =>
             {
                 filmes.Add(new ModelFilmes
@@ -42,14 +41,10 @@ namespace Api_Itvbr.Model
 
         public static List<ModelFilmes> GetModelFilmesId(int id)
         {
-            string table = "filmes";
-            List<ModelFilmes> filmes = new List<ModelFilmes>();
-            List<DataRow> rows = Db.GetDataId(table, id).AsEnumerable().ToList();
-
+            rows = Db.GetDataId(Table, id).AsEnumerable().ToList();
             rows.ForEach(r =>
             filmes.Add(new ModelFilmes
             {
-
                 Id = r.Field<int>("id"),
                 Image = r.Field<string>("image"),
                 Nome = r.Field<string>("nome"),
@@ -62,42 +57,21 @@ namespace Api_Itvbr.Model
         }
 
         public static string PostFilmes(ModelFilmes filme)
-        {
-            string filmes = "filmes";
-            string table = "image, nome, genero, categoria, descricao, url";
+        { 
             string values = $"'{filme.Image}','{filme.Nome}', '{filme.Genero}', '{filme.Categoria}', '{filme.Descricao}', '{filme.UrlVideo}'";
-            var insertFilmes = Db.InsertData(filmes, table, values);
-            if (insertFilmes == true)
-            {
+            return Db.InsertData(Table, Columns, values).ToString();
 
-                return "Filme cadastrado com sucesso";
-            }
-            return "Erro ao cadastrar";
         }
 
         public static string UpdateModelFilmes(ModelFilmes filmes, int id)
         {
             string query = $"image='{filmes.Image}', nome='{filmes.Nome}', genero='{filmes.Genero}', categoria='{filmes.Categoria}', descricao='{filmes.Descricao}', url='{filmes.UrlVideo}'";
-            string nome = "filmes";
-            var result = Db.UpdateDataId(nome, query, id);
-            if (result == true)
-            {
-                return "Filme atualizado com sucesso!";
-
-            }
-            return "Erro ao atualizar filme";
+            return Db.UpdateDataId(Table, query, id).ToString();
         }
 
         public static string DeleteModelFilmes(int id)
         {
-            string nome = "filmes";
-            var result = Db.DeleteDataId(nome, id);
-
-            if (result == true)
-            {
-                return "Filme deletado com sucesso!";
-            }
-            return "Erro ao deletar filme";
+            return Db.DeleteDataId(Table, id).ToString();
         }
 
     }

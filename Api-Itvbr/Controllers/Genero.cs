@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using Api_Itvbr.Model;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 
@@ -13,34 +14,37 @@ namespace Api_Itvbr.Controllers
     {
         // GET: api/values
         [HttpGet]
-        public IEnumerable<string> Get()
+        public List<GeneroModel> Get()
         {
-            return new string[] { "value1", "value2" };
+            return GeneroModel.GetGeneros();
         }
 
         // GET api/values/5
         [HttpGet("{id}")]
-        public string Get(int id)
+        public List<GeneroModel> Get(int id)
         {
-            return "value";
+            return GeneroModel.GetGenerosId(id);
         }
 
         // POST api/values
         [HttpPost]
-        public void Post([FromBody]string value)
+        public string Post([FromBody]GeneroModel genero)
         {
+            return GeneroModel.InsertGenero(genero);
         }
 
         // PUT api/values/5
         [HttpPut("{id}")]
-        public void Put(int id, [FromBody]string value)
+        public string Put(int id, [FromBody]GeneroModel model)
         {
+            return GeneroModel.UpdateGeneroId(model, id);
         }
 
         // DELETE api/values/5
         [HttpDelete("{id}")]
-        public void Delete(int id)
+        public string Delete(int id)
         {
+            return GeneroModel.DeleteGeneroId(id);
         }
     }
 }
