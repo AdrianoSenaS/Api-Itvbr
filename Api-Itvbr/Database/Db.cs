@@ -8,7 +8,7 @@ namespace Api_Itvbr.Model
 	public class Db
 	{
 
-        public static SqlConnection sql = new SqlConnection("Server=192.168.15.40;Database=itvbr;User Id=SA;Password=Ad2021@i@;");
+        public static SqlConnection sql = new SqlConnection("");
 
         public static DataTable GetData(string table)
         {
